@@ -1,0 +1,11 @@
+flake8==6.0.0
+isort==5.11.3
+mypy-extensions==0.4.3
+mypy==0.991
+pip-tools==6.12.1
+pytest==7.2.0
+types-requests
+types-pyyaml
+requests-mock
+typing_extensions==4.4.0
+yapf==0.32.0

@@ -1,0 +1,18 @@
+transactions_path: "./transactions.dat"
+price_db_settings:
+  path: "./price.db"
+  start_date: "2022-01-01"
+exchange_rates_api_settings:
+  api_url: "https://api.apilayer.com/exchangerates_data"
+  api_key: "SECRET_KEY"
+  main_currency: "USD"
+  currencies:
+    - RUB
+    - EUR
+    - GEL
+    - TRY
+  currency_aliases:
+    RUB: "₽"
+    EUR: "€"
+    USD: "$"
+    TRY: "TL"

@@ -1,0 +1,6 @@
+arrow
+pydantic
+PyYAML
+requests
+typer[all]
+loguru
