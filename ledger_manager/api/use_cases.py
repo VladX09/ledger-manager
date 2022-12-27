@@ -14,6 +14,10 @@ from .services import ExchangeRatesClient, LedgerClient, LedgerCmd, PriceDB
 EPOCH_BEGIN = arrow.get(1980, 1, 1)
 
 
+def get_leger_end_day() -> arrow.Arrow:
+    return arrow.now().floor('days').shift(days=1)
+
+
 def forward(
     *args,
     config: AppConfig,
@@ -37,7 +41,7 @@ def balance(
     **options: t.Any,
 ):
     client = LedgerClient.from_config(config)
-    end_arrow = arrow.get(end) if end else arrow.now()
+    end_arrow = arrow.get(end) if end else get_leger_end_day()
     patterns = patterns or []
 
     if not begin:
@@ -68,7 +72,7 @@ def average(
     **options: t.Any,
 ):
     client = LedgerClient.from_config(config)
-    end_arrow = arrow.get(end) if end else arrow.now()
+    end_arrow = arrow.get(end) if end else get_leger_end_day()
     patterns = patterns or []
 
     if not aggregation:

@@ -1,7 +1,6 @@
 import typing as t
 from datetime import datetime
 
-import arrow
 import typer
 
 from ledger_manager.api import use_cases
@@ -16,7 +15,7 @@ app = typer.Typer(help="Custom reports.")
 def balance(
         ctx: typer.Context,
         patterns: t.Optional[t.List[str]] = typer.Argument(None),
-        end: datetime = typer.Option(arrow.now().datetime, formats=[Consts.DATE_FORMAT]),
+        end: datetime = typer.Option(use_cases.get_leger_end_day().datetime, formats=[Consts.DATE_FORMAT]),
         floor: t.Optional[FloorType] = typer.Option(None, "--last"),
         begin: t.Optional[datetime] = typer.Option(None, formats=[Consts.DATE_FORMAT]),
         exchange: t.Optional[str] = typer.Option(None, "--exchange", "-X"),
@@ -56,7 +55,7 @@ def assets(
 @app.command()
 def expenses(
         ctx: typer.Context,
-        end: datetime = typer.Option(arrow.now().datetime, formats=[Consts.DATE_FORMAT]),
+        end: datetime = typer.Option(use_cases.get_leger_end_day().datetime, formats=[Consts.DATE_FORMAT]),
         floor: t.Optional[FloorType] = typer.Option(FloorType.month, "--last"),
         begin: t.Optional[datetime] = typer.Option(None, formats=[Consts.DATE_FORMAT]),
         exchange: t.Optional[str] = typer.Option(None, "--exchange", "-X"),
@@ -99,7 +98,7 @@ def budget(
 def average(
         ctx: typer.Context,
         patterns: t.Optional[t.List[str]] = typer.Argument(None),
-        end: datetime = typer.Option(arrow.now().datetime, formats=[Consts.DATE_FORMAT]),
+        end: datetime = typer.Option(use_cases.get_leger_end_day().datetime, formats=[Consts.DATE_FORMAT]),
         floor: FloorType = typer.Option(FloorType.month, "--last"),
         aggregation: AggregationType = typer.Option(AggregationType.daily, "--agg"),
         begin: t.Optional[datetime] = typer.Option(None, formats=[Consts.DATE_FORMAT]),
