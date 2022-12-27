@@ -12,7 +12,7 @@ def parse_requirements(requirements_file: str):
 
 setup(
     name="ledger-manager",
-    version="0.1.0",
+    version="0.1.1",
     description="Ledger CLI wrapper with additional tools",
     author="Vladislav Verba",
     author_email='vladoladis@gmail.com',
