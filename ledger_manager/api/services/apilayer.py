@@ -10,6 +10,10 @@ from ..models import Consts, ExchangeRate
 T = t.TypeVar("T", bound="ExchangeRatesClient")
 
 
+class ExchangeRatesAPIException(Exception):
+    pass
+
+
 class TimeSeries(pydantic.BaseModel):
     rates: dict[datetime, dict[str, float]]
 
@@ -62,9 +66,13 @@ class ExchangeRatesClient:
             },
         )
 
-        response.raise_for_status()
-        response_body = response.json()
-        data = TimeSeries.parse_obj(response_body)
+        try:
+            response.raise_for_status()
+            response_body = response.json()
+            data = TimeSeries.parse_obj(response_body)
+
+        except requests.HTTPError as exc:
+            raise ExchangeRatesAPIException("Incorrect exchange rate API response") from exc
 
         for date, record in data.rates.items():
             for symbol, price in record.items():

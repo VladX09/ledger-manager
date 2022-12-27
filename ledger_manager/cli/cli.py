@@ -8,6 +8,7 @@ from rich.panel import Panel
 
 from ledger_manager.api import use_cases
 from ledger_manager.api.models import Consts
+from ledger_manager.api.services import ExchangeRatesAPIException, LedgerClientException
 from ledger_manager.console import console
 
 from .common import CONTEXT_SETTINGS, CommonParams, ErrorHandlingTyper
@@ -39,7 +40,11 @@ def common_options(
     logger.debug("Got config: {}", ctx.obj.config.dict())
 
 
-@app.error_handler(pydantic.ValidationError)
+@app.error_handler(
+    pydantic.ValidationError,
+    LedgerClientException,
+    ExchangeRatesAPIException,
+)
 def validation_error_handler(error: pydantic.ValidationError) -> int:
     console.print(Panel(str(error), border_style="red", title=error.__class__.__qualname__))
     return 1

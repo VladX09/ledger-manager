@@ -11,6 +11,10 @@ from ..config import AppConfig
 T = t.TypeVar("T", bound="LedgerClient")
 
 
+class LedgerClientException(Exception):
+    pass
+
+
 class LedgerCmd:
 
     def __init__(self, client: 'LedgerClient') -> None:
@@ -101,7 +105,6 @@ class LedgerClient:
         stdout, stderr = proc.communicate()
 
         if stderr:
-            print(stderr)
-            raise RuntimeError()
+            raise LedgerClientException(stderr)
 
         return stdout
